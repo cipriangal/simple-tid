@@ -36,7 +36,7 @@ void B1SteppingAction::UserSteppingAction(const G4Step* step)
       ->GetVolume()->GetLogicalVolume();
       
   G4int found = -1;
-  for(int i=0;i<fScoringVolume.size();i++)
+  for(size_t i=0;i<fScoringVolume.size();i++)
     if(volume == fScoringVolume[i])
       found = i;
 
