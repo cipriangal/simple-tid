@@ -1,5 +1,5 @@
 #include "B1PrimaryGeneratorAction.hh"
-
+#include "TClass.h"
 #include "G4LogicalVolumeStore.hh"
 #include "G4LogicalVolume.hh"
 #include "G4Box.hh"
@@ -28,7 +28,7 @@ B1PrimaryGeneratorAction::B1PrimaryGeneratorAction()
   fParticleGun->SetParticleDefinition(particle);
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
   fParticleGun->SetParticleEnergy(6.*MeV);
-  fin=TFile::Open("./beamGeoV2_radAnaV5.root","READ");
+  /*fin=TFile::Open("./2bounce_electron.root","READ");
   if(fin){
     fin->ls();
   }else{
@@ -36,21 +36,22 @@ B1PrimaryGeneratorAction::B1PrimaryGeneratorAction()
     exit(0);
   }
 
-  hE=(TH1F*)fin->Get(Form("det28/d28_energy_R7_%s_allPZ",hNm[proc].data()));
+  //hE=(TH1F*)fin->Get(Form("det28/d28_energy_R7_%s_allPZ",hNm[proc].data()));
+  hE=(TH1F*)fin->Get("h");
   assert(hE);
   G4cout<<"Using "<<hE->GetTitle()<<G4endl;
   if(!hE){
     G4cout<<"can't find histo"<<G4endl;
     exit(0);
-  }
+  }*/
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 B1PrimaryGeneratorAction::~B1PrimaryGeneratorAction()
 {
-  fin->Close();
-  delete fin;
+  //fin->Close();
+  //delete fin;
   delete fParticleGun;
 }
 
@@ -62,8 +63,8 @@ void B1PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   G4double x0 = 2*cm*(G4UniformRand()-0.5);
   G4double y0 = 2*cm*(G4UniformRand()-0.5);
   G4double z0 = -7*cm;
-  G4double energy = hE->GetRandom()*MeV;
-  //G4double energy = 6*MeV;
+  //G4double energy = hE->GetRandom()*MeV;
+  G4double energy = 6*MeV;
   fParticleGun->SetParticleEnergy(energy);
   fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
 
